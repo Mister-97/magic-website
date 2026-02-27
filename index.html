@@ -360,6 +360,10 @@
   .reveal.visible { opacity: 1; transform: none; }
 
   @media (max-width: 900px) {
+    /* Hide custom cursor on mobile — use native touch cursor */
+    body { cursor: auto; }
+    .cursor, .cursor-ring { display: none; }
+
     nav { padding: 1.5rem 2rem; }
     .nav-links { display: none; }
     .hero { padding: 0 2rem 4rem; }
@@ -378,6 +382,9 @@
     .services-header { flex-direction: column; gap: 2rem; align-items: flex-start; }
     #services { padding: 5rem 2rem; }
     .process { padding: 5rem 2rem; }
+
+    /* Longer video clips on mobile (6s + 5s = 11s) */
+    .video-dot { --clip-duration: 11s; }
   }
 </style>
 </head>
@@ -595,17 +602,22 @@
 </footer>
 
 <script>
+  // Only init cursor on non-touch devices
+  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-    setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
-  });
-  document.querySelectorAll('a, button, .service-card').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; ring.style.width = '60px'; ring.style.height = '60px'; });
-    el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; ring.style.width = '40px'; ring.style.height = '40px'; });
-  });
+
+  if (!isTouchDevice) {
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
+    });
+    document.querySelectorAll('a, button, .service-card').forEach(el => {
+      el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; ring.style.width = '60px'; ring.style.height = '60px'; });
+      el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; ring.style.width = '40px'; ring.style.height = '40px'; });
+    });
+  }
 
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
@@ -621,12 +633,16 @@
     document.getElementById('successMsg').classList.add('show');
   });
 
-  const CLIP_DURATION = 6000;
+  // Clip duration: 11s on mobile, 6s on desktop
+  const CLIP_DURATION = window.innerWidth <= 900 ? 11000 : 6000;
   const slides = document.querySelectorAll('.hero-video-slide');
   const dots = document.querySelectorAll('.video-dot');
   let current = 0;
   let timer;
   let isMuted = true;
+
+  // Update dot animation duration to match
+  dots.forEach(d => d.style.setProperty('--clip-duration', (CLIP_DURATION / 1000) + 's'));
 
   function goToSlide(index) {
     slides[current].classList.remove('active');
