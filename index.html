@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAGIC — Host · Trainer · Consultant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8c96e;
+    --red: #c0392b;
+    --gray: #1a1a1a;
+    --mid: #888;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 40px; height: 40px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, width 0.2s, height 0.2s;
+    opacity: 0.5;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4rem;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 3rem; list-style: none; }
+  .nav-links a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+  .nav-book {
+    background: var(--gold);
+    color: var(--black) !important;
+    padding: 0.6rem 1.5rem;
+    opacity: 1 !important;
+    font-weight: 500;
+    transition: background 0.2s !important;
+  }
+  .nav-book:hover { background: var(--gold-light) !important; }
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 4rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-video-container { position: absolute; inset: 0; z-index: 0; }
+  .hero-video-slide {
+    position: absolute; inset: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+  }
+  .hero-video-slide.active { opacity: 1; }
+  .hero-video-slide video { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .hero-video-slide .video-fallback {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.1); text-transform: uppercase;
+  }
+  .hero-video-slide:nth-child(1) .video-fallback { background: linear-gradient(135deg, #0a0a0a 0%, #1a1208 50%, #0a0a0a 100%); }
+  .hero-video-slide:nth-child(2) .video-fallback { background: linear-gradient(135deg, #0a0a0a 0%, #12100a 50%, #0a0a0a 100%); }
+  .hero-video-slide:nth-child(3) .video-fallback { background: linear-gradient(135deg, #0a0a0a 0%, #0a0e12 50%, #0a0a0a 100%); }
+
+  .hero-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background:
+      linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.4) 40%, rgba(10,10,10,0.2) 70%, rgba(10,10,10,0.5) 100%),
+      linear-gradient(to right, rgba(10,10,10,0.6) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 2;
+    background-image: linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: gridShift 20s linear infinite;
+  }
+  @keyframes gridShift { 0% { transform: translateY(0); } 100% { transform: translateY(80px); } }
+
+  .hero-video-dots {
+    position: absolute; bottom: 6rem; right: 4rem; z-index: 10;
+    display: flex; flex-direction: column; gap: 0.6rem; align-items: center;
+  }
+  .video-dot {
+    width: 4px; height: 20px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px; cursor: pointer;
+    transition: background 0.3s, height 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .video-dot.active { background: rgba(201,168,76,0.4); height: 36px; }
+  .video-dot.active::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%;
+    background: var(--gold);
+    animation: dotProgress var(--clip-duration, 6s) linear forwards;
+    transform-origin: top;
+  }
+  @keyframes dotProgress { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+  .hero-video-label {
+    position: absolute; bottom: 6.5rem; right: 5.5rem; z-index: 10;
+    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
+  }
+  .hero-mute {
+    position: absolute; top: 6rem; right: 4rem; z-index: 10;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    color: var(--white); font-size: 0.75rem; padding: 0.5rem 1rem; cursor: pointer;
+    letter-spacing: 0.1em; backdrop-filter: blur(10px); transition: background 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .hero-mute:hover { background: rgba(255,255,255,0.15); }
+
+  .hero-number {
+    position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(20rem, 35vw, 40rem);
+    color: rgba(201,168,76,0.03); line-height: 1;
+    pointer-events: none; user-select: none; letter-spacing: -0.05em; z-index: 3;
+  }
+  .hero-tagline {
+    font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+    opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+    position: relative; z-index: 5;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(6rem, 18vw, 20rem);
+    line-height: 0.85; letter-spacing: -0.02em;
+    position: relative; z-index: 5;
+    opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-title .outline { -webkit-text-stroke: 2px var(--white); color: transparent; }
+  .hero-title .gold-text { color: var(--gold); }
+  .hero-sub {
+    display: flex; gap: 3rem; margin-top: 3rem;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+    position: relative; z-index: 5;
+  }
+  .hero-service-pill {
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--mid); display: flex; align-items: center; gap: 0.5rem;
+  }
+  .hero-service-pill::before { content: ''; width: 20px; height: 1px; background: var(--gold); display: inline-block; }
+  .hero-cta {
+    margin-top: 3rem; display: flex; gap: 1.5rem; align-items: center;
+    opacity: 0; animation: fadeUp 0.8s 1s forwards;
+    position: relative; z-index: 5;
+  }
+  .btn-primary {
+    background: var(--gold); color: var(--black);
+    padding: 1rem 3rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+    transition: background 0.2s, transform 0.2s; display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-ghost {
+    color: var(--white); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    text-decoration: none; display: flex; align-items: center; gap: 0.75rem;
+    opacity: 0.6; transition: opacity 0.2s;
+  }
+  .btn-ghost:hover { opacity: 1; }
+  .btn-ghost::after { content: '→'; transition: transform 0.2s; }
+  .btn-ghost:hover::after { transform: translateX(4px); }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+  .strip {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 1.2rem 4rem; display: flex; gap: 4rem;
+    overflow: hidden; white-space: nowrap; position: relative;
+  }
+  .strip-inner { display: flex; gap: 6rem; animation: marquee 20s linear infinite; }
+  .strip-item { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); flex-shrink: 0; }
+  .strip-sep { color: rgba(201,168,76,0.3); }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  .about {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 80vh;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .about-left {
+    padding: 8rem 4rem;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .section-label {
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+  .about-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 6rem);
+    line-height: 0.9; margin-bottom: 2.5rem;
+  }
+  .about-title em { font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold); }
+  .about-body { font-size: 1rem; line-height: 1.8; color: rgba(245,240,232,0.6); max-width: 440px; }
+  .about-right { display: grid; grid-template-rows: 1fr 1fr 1fr; }
+  .about-stat {
+    padding: 3rem 4rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 2rem;
+    transition: background 0.3s;
+  }
+  .about-stat:last-child { border-bottom: none; }
+  .about-stat:hover { background: rgba(201,168,76,0.04); }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: var(--gold); line-height: 1; flex-shrink: 0; opacity: 0.3; }
+  .stat-text { font-size: 0.85rem; line-height: 1.6; color: rgba(245,240,232,0.5); }
+  .stat-text strong { display: block; color: var(--white); font-size: 1.1rem; margin-bottom: 0.25rem; }
+
+  #services { padding: 8rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem; }
+  .services-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 7vw, 7rem); line-height: 0.9; }
+  .services-title .outline { -webkit-text-stroke: 2px rgba(245,240,232,0.3); color: transparent; display: block; }
+  .services-intro { max-width: 320px; font-size: 0.85rem; line-height: 1.7; color: rgba(245,240,232,0.5); }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid rgba(255,255,255,0.06); }
+  .service-card {
+    padding: 4rem 3rem;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    position: relative; overflow: hidden; transition: background 0.4s;
+  }
+  .service-card:last-child { border-right: none; }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+  }
+  .service-card:hover { background: rgba(201,168,76,0.04); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon { font-size: 2.5rem; margin-bottom: 2rem; display: block; }
+  .service-num { position: absolute; top: 2rem; right: 2.5rem; font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: rgba(255,255,255,0.03); line-height: 1; }
+  .service-tag { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+  .service-name { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; line-height: 0.9; margin-bottom: 1.5rem; }
+  .service-desc { font-size: 0.85rem; line-height: 1.7; color: rgba(245,240,232,0.5); margin-bottom: 2.5rem; }
+  .service-features { list-style: none; margin-bottom: 3rem; }
+  .service-features li {
+    font-size: 0.75rem; letter-spacing: 0.05em; color: rgba(245,240,232,0.4);
+    padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .service-features li::before { content: '✦'; color: var(--gold); font-size: 0.5rem; flex-shrink: 0; }
+  .service-link { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: gap 0.2s; }
+  .service-link:hover { gap: 1rem; }
+
+  .process { padding: 8rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.06); background: var(--gray); }
+  .process-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 8rem; align-items: start; }
+  .process-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .step { position: relative; padding-top: 4rem; }
+  .step::before { content: attr(data-step); position: absolute; top: 0; left: 0; font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: rgba(201,168,76,0.15); line-height: 1; }
+  .step-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; margin-bottom: 0.75rem; letter-spacing: 0.05em; }
+  .step-desc { font-size: 0.8rem; line-height: 1.7; color: rgba(245,240,232,0.4); }
+
+  #book { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; }
+  .book-left {
+    background: var(--gold); padding: 8rem 5rem;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .book-left::before {
+    content: 'BOOK'; position: absolute; bottom: -2rem; left: -1rem;
+    font-family: 'Bebas Neue', sans-serif; font-size: 18rem;
+    color: rgba(0,0,0,0.08); line-height: 1; pointer-events: none;
+  }
+  .book-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 6rem); color: var(--black); line-height: 0.9; margin-bottom: 1.5rem; }
+  .book-sub { font-size: 1rem; color: rgba(10,10,10,0.6); line-height: 1.7; max-width: 320px; margin-bottom: 3rem; }
+  .book-contact { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-item { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: rgba(10,10,10,0.7); }
+  .contact-icon { width: 36px; height: 36px; background: rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+  .book-right { padding: 8rem 5rem; display: flex; flex-direction: column; justify-content: center; }
+  .form-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.1em; margin-bottom: 2.5rem; }
+  .form-group { margin-bottom: 1.5rem; }
+  .form-group label { display: block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.5rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; background: transparent; border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    padding: 0.75rem 0; outline: none; transition: border-color 0.2s; -webkit-appearance: none;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-bottom-color: var(--gold); }
+  .form-group select { cursor: pointer; background: var(--black); }
+  .form-group select option { background: var(--gray); color: var(--white); }
+  .form-group textarea { resize: none; height: 80px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .form-submit {
+    width: 100%; background: var(--gold); color: var(--black); border: none;
+    padding: 1.2rem; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; margin-top: 1rem;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .success-msg { display: none; text-align: center; padding: 3rem; border: 1px solid var(--gold); }
+  .success-msg.show { display: block; }
+  .success-msg h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 1rem; }
+  .success-msg p { color: rgba(245,240,232,0.5); font-size: 0.9rem; }
+
+  footer { padding: 3rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.3em; color: var(--gold); }
+  .footer-copy { font-size: 0.7rem; letter-spacing: 0.1em; color: var(--mid); }
+  .footer-socials { display: flex; gap: 1.5rem; }
+  .footer-socials a { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); text-decoration: none; transition: color 0.2s; }
+  .footer-socials a:hover { color: var(--gold); }
+
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s, transform 0.7s; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 2rem 4rem; }
+    .about { grid-template-columns: 1fr; }
+    .about-right { border-top: 1px solid rgba(255,255,255,0.06); }
+    .about-stat { padding: 2rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .process-inner { grid-template-columns: 1fr; gap: 4rem; }
+    .process-steps { grid-template-columns: 1fr; }
+    #book { grid-template-columns: 1fr; }
+    .book-left { padding: 5rem 2rem; }
+    .book-right { padding: 4rem 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+    .services-header { flex-direction: column; gap: 2rem; align-items: flex-start; }
+    #services { padding: 5rem 2rem; }
+    .process { padding: 5rem 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <a href="#" class="nav-logo">MAGIC</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#book" class="nav-book">Book Now</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-video-container">
+    <div class="hero-video-slide active" id="slide-0">
+      <video autoplay muted loop playsinline>
+        <source src="video-event.mp4" type="video/mp4">
+      </video>
+      <div class="video-fallback">Loading...</div>
+    </div>
+    <div class="hero-video-slide" id="slide-1">
+      <video muted loop playsinline>
+        <source src="video-training.mp4" type="video/mp4">
+      </video>
+      <div class="video-fallback">💪 Training — Add video-training.mp4</div>
+    </div>
+    <div class="hero-video-slide" id="slide-2">
+      <video muted loop playsinline>
+        <source src="video-restaurant.mp4" type="video/mp4">
+      </video>
+      <div class="video-fallback">🍽️ Restaurant — Add video-restaurant.mp4</div>
+    </div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid"></div>
+  <button class="hero-mute" id="muteBtn" onclick="toggleMute()">🔇 Sound</button>
+  <div class="hero-video-dots">
+    <div class="video-dot active" onclick="goToSlide(0)" style="--clip-duration:6s"></div>
+    <div class="video-dot" onclick="goToSlide(1)" style="--clip-duration:6s"></div>
+    <div class="video-dot" onclick="goToSlide(2)" style="--clip-duration:6s"></div>
+  </div>
+  <span class="hero-video-label">Magic in Action</span>
+  <div class="hero-number">M</div>
+  <span class="hero-tagline">Available for Bookings · Based in the USA</span>
+  <h1 class="hero-title">
+    <span class="gold-text">MAKE</span><br>
+    <span class="outline">EVERY</span><br>
+    MOMENT
+  </h1>
+  <div class="hero-sub">
+    <span class="hero-service-pill">Event Host</span>
+    <span class="hero-service-pill">Personal Trainer</span>
+    <span class="hero-service-pill">Restaurant Consultant</span>
+  </div>
+  <div class="hero-cta">
+    <a href="#book" class="btn-primary">Book Magic</a>
+    <a href="#services" class="btn-ghost">Explore Services</a>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-inner">
+    <span class="strip-item">Event Hosting</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Personal Training</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Restaurant Consulting</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Corporate Events</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Custom Fitness Plans</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Menu Development</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Event Hosting</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Personal Training</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Restaurant Consulting</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Corporate Events</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Custom Fitness Plans</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Menu Development</span><span class="strip-sep">✦</span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-left reveal">
+    <span class="section-label">The Man Behind the Name</span>
+    <h2 class="about-title">One Name.<br><em>Three Worlds.</em><br>Zero Limits.</h2>
+    <p class="about-body">
+      Magic isn't just a name — it's a promise. Whether he's commanding a crowd at your event, pushing you past your limits in the gym, or transforming your restaurant into a must-visit destination, Magic brings an unmatched energy and expertise to everything he does.<br><br>
+      Seen at <strong style="color:var(--gold)">Mahari</strong> and beyond — passion-driven, results-focused, unforgettable.
+    </p>
+    <div style="margin-top:3rem; position:relative; overflow:hidden;">
+      <img src="magic-mahari.png" alt="Magic at Mahari Restaurant" style="width:100%; max-width:480px; display:block; filter:brightness(0.9) contrast(1.05);">
+      <div style="position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(10,10,10,0.8),transparent);"></div>
+      <span style="position:absolute;bottom:1.2rem;left:1.5rem;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);opacity:0.8;">✦ Mahari Restaurant</span>
+    </div>
+  </div>
+  <div class="about-right">
+    <div class="about-stat reveal"><span class="stat-num">8+</span><div class="stat-text"><strong>Years of Experience</strong>Across all three disciplines, delivering excellence every single time.</div></div>
+    <div class="about-stat reveal"><span class="stat-num">500+</span><div class="stat-text"><strong>Events Hosted</strong>From intimate gatherings to large-scale productions — Magic owns the room.</div></div>
+    <div class="about-stat reveal"><span class="stat-num">3</span><div class="stat-text"><strong>Disciplines Mastered</strong>Hosting, fitness, and food — three completely different worlds, one professional.</div></div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="services-header reveal">
+    <h2 class="services-title">What Magic<br><span class="outline">Brings to the</span><br>Table</h2>
+    <p class="services-intro">Three services. One standard: exceptional. Choose your experience and let's make it happen.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-num">01</span>
+      <span class="service-icon">🎤</span>
+      <span class="service-tag">Service 01</span>
+      <h3 class="service-name">Event<br>Host</h3>
+      <p class="service-desc">From the moment guests arrive to the final farewell, Magic controls the energy, the flow, and the vibe. Every event becomes a story worth telling.</p>
+      <ul class="service-features">
+        <li>Corporate Events & Galas</li>
+        <li>Private Parties & Celebrations</li>
+        <li>Award Shows & Ceremonies</li>
+        <li>Product Launches & Brand Events</li>
+        <li>Live Crowd Engagement</li>
+      </ul>
+      <a href="#book" class="service-link">Book for an Event →</a>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">02</span>
+      <span class="service-icon">💪</span>
+      <span class="service-tag">Service 02</span>
+      <h3 class="service-name">Personal<br>Trainer</h3>
+      <p class="service-desc">Magic doesn't just build bodies — he builds discipline, confidence, and lasting results. Tailored programs for all fitness levels and goals.</p>
+      <ul class="service-features">
+        <li>1-on-1 Personal Training</li>
+        <li>Custom Workout Programs</li>
+        <li>Nutrition Guidance</li>
+        <li>Virtual & In-Person Sessions</li>
+        <li>Accountability Coaching</li>
+      </ul>
+      <a href="#book" class="service-link">Start Training →</a>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">03</span>
+      <span class="service-icon">🍽️</span>
+      <span class="service-tag">Service 03</span>
+      <h3 class="service-name">Restaurant<br>Consultant</h3>
+      <p class="service-desc">Behind Mahari and more — Magic brings the expertise to elevate your concept, streamline operations, and create dining experiences guests rave about.</p>
+      <ul class="service-features">
+        <li>Concept Development</li>
+        <li>Menu Design & Strategy</li>
+        <li>Staff Training & Culture</li>
+        <li>Operations Optimization</li>
+        <li>Brand & Guest Experience</li>
+      </ul>
+      <a href="#book" class="service-link">Consult with Magic →</a>
+    </div>
+  </div>
+</section>
+
+<section class="process" id="process">
+  <div class="process-inner">
+    <div class="process-left reveal">
+      <span class="section-label">How It Works</span>
+      <h2 class="about-title">Simple.<br><em>Seamless.</em><br>Done.</h2>
+    </div>
+    <div class="process-steps">
+      <div class="step reveal" data-step="01"><h3 class="step-name">Reach Out</h3><p class="step-desc">Fill out the booking form below with your service, date, and details. Magic will review and respond within 24 hours.</p></div>
+      <div class="step reveal" data-step="02"><h3 class="step-name">Consultation</h3><p class="step-desc">Jump on a quick call to align on your vision, expectations, and goals. This is where the magic starts.</p></div>
+      <div class="step reveal" data-step="03"><h3 class="step-name">Customize</h3><p class="step-desc">Magic tailors the approach specifically to you — no cookie-cutter packages, no one-size-fits-all.</p></div>
+      <div class="step reveal" data-step="04"><h3 class="step-name">Experience It</h3><p class="step-desc">Sit back and watch it unfold. Results you can see, moments you won't forget, experiences people talk about.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="book-left">
+    <span class="section-label" style="color: rgba(10,10,10,0.5); margin-bottom: 1.5rem;">Let's Work Together</span>
+    <h2 class="book-title">Ready to<br>Book Magic?</h2>
+    <p class="book-sub">Fill out the form and Magic will personally get back to you within 24 hours. No automated responses — just real conversations.</p>
+    <div class="book-contact">
+      <div class="contact-item"><span class="contact-icon">📧</span>hello@bookmagic.com</div>
+      <div class="contact-item"><span class="contact-icon">📱</span>Available on IG · @bookmagic</div>
+      <div class="contact-item"><span class="contact-icon">📍</span>Based in USA · Available Nationwide</div>
+    </div>
+  </div>
+  <div class="book-right">
+    <h3 class="form-title">Send a Booking Request</h3>
+    <form id="bookingForm">
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" placeholder="Your name" required></div>
+        <div class="form-group"><label>Last Name</label><input type="text" placeholder="Last name" required></div>
+      </div>
+      <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com" required></div>
+      <div class="form-row">
+        <div class="form-group"><label>Service</label><select required><option value="" disabled selected>Select a service</option><option>Event Hosting</option><option>Personal Training</option><option>Restaurant Consulting</option><option>Multiple Services</option></select></div>
+        <div class="form-group"><label>Preferred Date</label><input type="date"></div>
+      </div>
+      <div class="form-group"><label>Tell Magic More</label><textarea placeholder="Describe your event, goals, or project..."></textarea></div>
+      <button type="submit" class="form-submit">Send Request ✦</button>
+    </form>
+    <div class="success-msg" id="successMsg">
+      <h3>It's Done ✦</h3>
+      <p>Your request has been received. Magic will be in touch within 24 hours. Get ready.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">MAGIC</span>
+  <span class="footer-copy">© 2025 Magic. All rights reserved.</span>
+  <div class="footer-socials">
+    <a href="#">Instagram</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">TikTok</a>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => { ring.style.left = e.clientX + 'px'; ring.style.top = e.clientY + 'px'; }, 80);
+  });
+  document.querySelectorAll('a, button, .service-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; ring.style.width = '60px'; ring.style.height = '60px'; });
+    el.addEventListener('mouseleave', () => { cursor.style.width = '12px'; cursor.style.height = '12px'; ring.style.width = '40px'; ring.style.height = '40px'; });
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) { setTimeout(() => entry.target.classList.add('visible'), i * 80); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    document.getElementById('successMsg').classList.add('show');
+  });
+
+  const CLIP_DURATION = 6000;
+  const slides = document.querySelectorAll('.hero-video-slide');
+  const dots = document.querySelectorAll('.video-dot');
+  let current = 0;
+  let timer;
+  let isMuted = true;
+
+  function goToSlide(index) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    const prevVideo = slides[current].querySelector('video');
+    if (prevVideo) prevVideo.pause();
+    current = index;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+    const dot = dots[current];
+    dot.style.animation = 'none';
+    dot.offsetHeight;
+    dot.style.animation = '';
+    const nextVideo = slides[current].querySelector('video');
+    if (nextVideo) { nextVideo.muted = isMuted; nextVideo.currentTime = 0; nextVideo.play().catch(() => {}); }
+    clearTimeout(timer);
+    timer = setTimeout(() => goToSlide((current + 1) % slides.length), CLIP_DURATION);
+  }
+
+  function toggleMute() {
+    isMuted = !isMuted;
+    slides.forEach(slide => { const v = slide.querySelector('video'); if (v) v.muted = isMuted; });
+    document.getElementById('muteBtn').textContent = isMuted ? '🔇 Sound' : '🔊 Sound';
+  }
+
+  slides.forEach(slide => {
+    const video = slide.querySelector('video');
+    const fallback = slide.querySelector('.video-fallback');
+    if (video && fallback) {
+      video.addEventListener('loadeddata', () => { fallback.style.display = 'none'; video.style.display = 'block'; });
+      video.addEventListener('error', () => { video.style.display = 'none'; fallback.style.display = 'flex'; });
+      if (video.readyState < 2) { video.style.display = 'none'; } else { fallback.style.display = 'none'; }
+    }
+  });
+
+  const firstVideo = slides[0].querySelector('video');
+  if (firstVideo) firstVideo.play().catch(() => {});
+  timer = setTimeout(() => goToSlide(1), CLIP_DURATION);
+
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let curr = '';
+    sections.forEach(sec => { if (window.scrollY >= sec.offsetTop - 200) curr = sec.id; });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.style.opacity = a.getAttribute('href') === '#' + curr ? '1' : '0.7';
+    });
+  });
+</script>
+</body>
+</html>
