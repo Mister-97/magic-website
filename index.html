@@ -360,7 +360,6 @@
   .reveal.visible { opacity: 1; transform: none; }
 
   @media (max-width: 900px) {
-    /* Hide custom cursor on mobile — use native touch cursor */
     body { cursor: auto; }
     .cursor, .cursor-ring { display: none; }
 
@@ -383,7 +382,6 @@
     #services { padding: 5rem 2rem; }
     .process { padding: 5rem 2rem; }
 
-    /* Longer video clips on mobile (6s + 5s = 11s) */
     .video-dot { --clip-duration: 11s; }
   }
 </style>
@@ -426,7 +424,7 @@
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-grid"></div>
-  <button class="hero-mute" id="muteBtn" onclick="toggleMute()">&#9651; SOUND</button>
+  <button class="hero-mute" id="muteBtn" onclick="toggleMute()">🔇 Sound</button>
   <div class="hero-video-dots">
     <div class="video-dot active" onclick="goToSlide(0)" style="--clip-duration:6s"></div>
     <div class="video-dot" onclick="goToSlide(1)" style="--clip-duration:6s"></div>
@@ -602,7 +600,6 @@
 </footer>
 
 <script>
-  // Only init cursor on non-touch devices
   const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -633,7 +630,6 @@
     document.getElementById('successMsg').classList.add('show');
   });
 
-  // Clip duration: 11s on mobile, 6s on desktop
   const CLIP_DURATION = window.innerWidth <= 900 ? 11000 : 6000;
   const slides = document.querySelectorAll('.hero-video-slide');
   const dots = document.querySelectorAll('.video-dot');
@@ -641,7 +637,6 @@
   let timer;
   let isMuted = true;
 
-  // Update dot animation duration to match
   dots.forEach(d => d.style.setProperty('--clip-duration', (CLIP_DURATION / 1000) + 's'));
 
   function goToSlide(index) {
@@ -665,7 +660,7 @@
   function toggleMute() {
     isMuted = !isMuted;
     slides.forEach(slide => { const v = slide.querySelector('video'); if (v) v.muted = isMuted; });
-    document.getElementById('muteBtn').textContent = isMuted ? '\u25b3 SOUND' : '\u25bc SOUND';
+    document.getElementById('muteBtn').textContent = isMuted ? '🔇 Sound' : '🔊 Sound';
   }
 
   slides.forEach(slide => {
