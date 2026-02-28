@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MAGIC / Host · Trainer · Consultant</title>
+<title>MAGIC · Host · Trainer · Coach · Consultant</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
 <style>
@@ -28,277 +28,167 @@
   }
 
   .cursor {
-    position: fixed;
-    width: 12px; height: 12px;
-    background: var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
+    position: fixed; width: 12px; height: 12px;
+    background: var(--gold); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
     transform: translate(-50%, -50%);
     transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
     mix-blend-mode: difference;
   }
   .cursor-ring {
-    position: fixed;
-    width: 40px; height: 40px;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
+    position: fixed; width: 40px; height: 40px;
+    border: 1px solid var(--gold); border-radius: 50%;
+    pointer-events: none; z-index: 9998;
     transform: translate(-50%, -50%);
     transition: transform 0.15s ease-out, width 0.2s, height 0.2s;
     opacity: 0.5;
   }
 
   nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
     padding: 2rem 4rem;
     background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
   }
-  .nav-logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
-    letter-spacing: 0.3em;
-    color: var(--gold);
-    text-decoration: none;
-  }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.3em; color: var(--gold); text-decoration: none; }
   .nav-links { display: flex; gap: 3rem; list-style: none; }
-  .nav-links a {
-    color: var(--white);
-    text-decoration: none;
-    font-size: 0.75rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    opacity: 0.7;
-    transition: opacity 0.2s, color 0.2s;
-  }
+  .nav-links a { color: var(--white); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.2s, color 0.2s; }
   .nav-links a:hover { opacity: 1; color: var(--gold); }
-  .nav-book {
-    background: var(--gold);
-    color: var(--black) !important;
-    padding: 0.6rem 1.5rem;
-    opacity: 1 !important;
-    font-weight: 500;
-    transition: background 0.2s !important;
-  }
+  .nav-book { background: var(--gold); color: var(--black) !important; padding: 0.6rem 1.5rem; opacity: 1 !important; font-weight: 500; transition: background 0.2s !important; }
   .nav-book:hover { background: var(--gold-light) !important; }
 
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 4rem 6rem;
-    position: relative;
-    overflow: hidden;
-  }
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 4rem 6rem; position: relative; overflow: hidden; }
   .hero-video-container { position: absolute; inset: 0; z-index: 0; }
-  .hero-video-slide {
-    position: absolute; inset: 0;
-    opacity: 0;
-    transition: opacity 1.2s ease-in-out;
-  }
+  .hero-video-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease-in-out; }
   .hero-video-slide.active { opacity: 1; }
   .hero-video-slide video { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-  .hero-video-slide .video-fallback {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.1); text-transform: uppercase;
-  }
+  .hero-video-slide .video-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(255,255,255,0.1); text-transform: uppercase; }
   .hero-video-slide:nth-child(1) .video-fallback { background: linear-gradient(135deg, #0a0a0a 0%, #1a1208 50%, #0a0a0a 100%); }
   .hero-video-slide:nth-child(2) .video-fallback { background: linear-gradient(135deg, #0a0a0a 0%, #12100a 50%, #0a0a0a 100%); }
   .hero-video-slide:nth-child(3) .video-fallback { background: linear-gradient(135deg, #0a0a0a 0%, #0a0e12 50%, #0a0a0a 100%); }
-
-  .hero-overlay {
-    position: absolute; inset: 0; z-index: 1;
-    background:
-      linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.4) 40%, rgba(10,10,10,0.2) 70%, rgba(10,10,10,0.5) 100%),
-      linear-gradient(to right, rgba(10,10,10,0.6) 0%, transparent 60%);
-  }
-  .hero-grid {
-    position: absolute; inset: 0; z-index: 2;
-    background-image: linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
-    background-size: 80px 80px;
-    animation: gridShift 20s linear infinite;
-  }
+  .hero-overlay { position: absolute; inset: 0; z-index: 1; background: linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.4) 40%, rgba(10,10,10,0.2) 70%, rgba(10,10,10,0.5) 100%), linear-gradient(to right, rgba(10,10,10,0.6) 0%, transparent 60%); }
+  .hero-grid { position: absolute; inset: 0; z-index: 2; background-image: linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px); background-size: 80px 80px; animation: gridShift 20s linear infinite; }
   @keyframes gridShift { 0% { transform: translateY(0); } 100% { transform: translateY(80px); } }
 
-  .hero-video-dots {
-    position: absolute; bottom: 6rem; right: 4rem; z-index: 10;
-    display: flex; flex-direction: column; gap: 0.6rem; align-items: center;
-  }
-  .video-dot {
-    width: 4px; height: 20px;
-    background: rgba(255,255,255,0.2);
-    border-radius: 2px; cursor: pointer;
-    transition: background 0.3s, height 0.3s;
-    position: relative; overflow: hidden;
-  }
+  .hero-video-dots { position: absolute; bottom: 6rem; right: 4rem; z-index: 10; display: flex; flex-direction: column; gap: 0.6rem; align-items: center; }
+  .video-dot { width: 4px; height: 20px; background: rgba(255,255,255,0.2); border-radius: 2px; cursor: pointer; transition: background 0.3s, height 0.3s; position: relative; overflow: hidden; }
   .video-dot.active { background: rgba(201,168,76,0.4); height: 36px; }
-  .video-dot.active::after {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%;
-    background: var(--gold);
-    animation: dotProgress var(--clip-duration, 6s) linear forwards;
-    transform-origin: top;
-  }
+  .video-dot.active::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%; background: var(--gold); animation: dotProgress var(--clip-duration, 6s) linear forwards; transform-origin: top; }
   @keyframes dotProgress { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
-  .hero-video-label {
-    position: absolute; bottom: 6.5rem; right: 5.5rem; z-index: 10;
-    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-    writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg);
-  }
-  .hero-mute {
-    position: absolute; top: 6rem; right: 4rem; z-index: 10;
-    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
-    color: var(--white); font-size: 0.75rem; padding: 0.5rem 1rem; cursor: pointer;
-    letter-spacing: 0.1em; backdrop-filter: blur(10px); transition: background 0.2s;
-    font-family: 'DM Sans', sans-serif;
-  }
+  .hero-video-label { position: absolute; bottom: 6.5rem; right: 5.5rem; z-index: 10; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); }
+  .hero-mute { position: absolute; top: 6rem; right: 4rem; z-index: 10; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: var(--white); font-size: 0.75rem; padding: 0.5rem 1rem; cursor: pointer; letter-spacing: 0.1em; backdrop-filter: blur(10px); transition: background 0.2s; font-family: 'DM Sans', sans-serif; }
   .hero-mute:hover { background: rgba(255,255,255,0.15); }
 
-  .hero-number {
-    position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(20rem, 35vw, 40rem);
-    color: rgba(201,168,76,0.03); line-height: 1;
-    pointer-events: none; user-select: none; letter-spacing: -0.05em; z-index: 3;
-  }
-  .hero-tagline {
-    font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 1.5rem;
-    opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
-    position: relative; z-index: 5;
-  }
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(6rem, 18vw, 20rem);
-    line-height: 0.85; letter-spacing: -0.02em;
-    position: relative; z-index: 5;
-    opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
-  }
+  .hero-number { position: absolute; right: 4rem; top: 50%; transform: translateY(-50%); font-family: 'Bebas Neue', sans-serif; font-size: clamp(20rem, 35vw, 40rem); color: rgba(201,168,76,0.03); line-height: 1; pointer-events: none; user-select: none; letter-spacing: -0.05em; z-index: 3; }
+  .hero-tagline { font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s 0.3s forwards; position: relative; z-index: 5; }
+  .hero-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(6rem, 18vw, 20rem); line-height: 0.85; letter-spacing: -0.02em; position: relative; z-index: 5; opacity: 0; animation: fadeUp 0.8s 0.5s forwards; }
   .hero-title .outline { -webkit-text-stroke: 2px var(--white); color: transparent; }
   .hero-title .gold-text { color: var(--gold); }
-  .hero-sub {
-    display: flex; gap: 3rem; margin-top: 3rem;
-    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
-    position: relative; z-index: 5;
-  }
-  .hero-service-pill {
-    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--mid); display: flex; align-items: center; gap: 0.5rem;
-  }
+  .hero-sub { display: flex; gap: 2rem; margin-top: 3rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s 0.8s forwards; position: relative; z-index: 5; }
+  .hero-service-pill { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); display: flex; align-items: center; gap: 0.5rem; }
   .hero-service-pill::before { content: ''; width: 20px; height: 1px; background: var(--gold); display: inline-block; }
-  .hero-cta {
-    margin-top: 3rem; display: flex; gap: 1.5rem; align-items: center;
-    opacity: 0; animation: fadeUp 0.8s 1s forwards;
-    position: relative; z-index: 5;
-  }
-  .btn-primary {
-    background: var(--gold); color: var(--black);
-    padding: 1rem 3rem;
-    font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500;
-    letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
-    transition: background 0.2s, transform 0.2s; display: inline-block;
-  }
+  .hero-cta { margin-top: 3rem; display: flex; gap: 1.5rem; align-items: center; opacity: 0; animation: fadeUp 0.8s 1s forwards; position: relative; z-index: 5; }
+  .btn-primary { background: var(--gold); color: var(--black); padding: 1rem 3rem; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.2s; display: inline-block; }
   .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
-  .btn-ghost {
-    color: var(--white); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
-    text-decoration: none; display: flex; align-items: center; gap: 0.75rem;
-    opacity: 0.6; transition: opacity 0.2s;
-  }
+  .btn-ghost { color: var(--white); font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 0.75rem; opacity: 0.6; transition: opacity 0.2s; }
   .btn-ghost:hover { opacity: 1; }
   .btn-ghost::after { content: '→'; transition: transform 0.2s; }
   .btn-ghost:hover::after { transform: translateX(4px); }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-  .strip {
-    border-top: 1px solid rgba(255,255,255,0.06);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding: 1.2rem 4rem; display: flex; gap: 4rem;
-    overflow: hidden; white-space: nowrap; position: relative;
-  }
-  .strip-inner { display: flex; gap: 6rem; animation: marquee 20s linear infinite; }
+  .strip { border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 1.2rem 4rem; display: flex; gap: 4rem; overflow: hidden; white-space: nowrap; position: relative; }
+  .strip-inner { display: flex; gap: 6rem; animation: marquee 25s linear infinite; }
   .strip-item { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); flex-shrink: 0; }
   .strip-sep { color: rgba(201,168,76,0.3); }
   @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-  .about {
-    display: grid; grid-template-columns: 1fr 1fr;
-    min-height: 80vh;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .about-left {
-    padding: 8rem 4rem;
-    border-right: 1px solid rgba(255,255,255,0.06);
-    display: flex; flex-direction: column; justify-content: center;
-  }
-  .section-label {
-    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 2rem;
-    display: flex; align-items: center; gap: 1rem;
-  }
+  .about { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .about-left { padding: 8rem 4rem; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; justify-content: center; }
+  .section-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
   .section-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
-  .about-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 6vw, 6rem);
-    line-height: 0.9; margin-bottom: 2.5rem;
-  }
+  .about-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 6rem); line-height: 0.9; margin-bottom: 2.5rem; }
   .about-title em { font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold); }
   .about-body { font-size: 1rem; line-height: 1.8; color: rgba(245,240,232,0.6); max-width: 440px; }
   .about-right { display: grid; grid-template-rows: 1fr 1fr 1fr; }
-  .about-stat {
-    padding: 3rem 4rem;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    display: flex; align-items: center; gap: 2rem;
-    transition: background 0.3s;
-  }
+  .about-stat { padding: 3rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 2rem; transition: background 0.3s; }
   .about-stat:last-child { border-bottom: none; }
   .about-stat:hover { background: rgba(201,168,76,0.04); }
   .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: var(--gold); line-height: 1; flex-shrink: 0; opacity: 0.3; }
   .stat-text { font-size: 0.85rem; line-height: 1.6; color: rgba(245,240,232,0.5); }
   .stat-text strong { display: block; color: var(--white); font-size: 1.1rem; margin-bottom: 0.25rem; }
 
+  /* ── Services: 7-card grid ── */
   #services { padding: 8rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem; }
   .services-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 7vw, 7rem); line-height: 0.9; }
   .services-title .outline { -webkit-text-stroke: 2px rgba(245,240,232,0.3); color: transparent; display: block; }
   .services-intro { max-width: 320px; font-size: 0.85rem; line-height: 1.7; color: rgba(245,240,232,0.5); }
-  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid rgba(255,255,255,0.06); }
-  .service-card {
-    padding: 4rem 3rem;
-    border-right: 1px solid rgba(255,255,255,0.06);
-    position: relative; overflow: hidden; transition: background 0.4s;
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.06);
   }
+  /* bottom row: 3 cards centered */
+  .services-grid .service-card:nth-child(5),
+  .services-grid .service-card:nth-child(6),
+  .services-grid .service-card:nth-child(7) {
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  /* span bottom row across 4 cols evenly */
+  .services-bottom {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .service-card { padding: 3.5rem 2.5rem; border-right: 1px solid rgba(255,255,255,0.06); position: relative; overflow: hidden; transition: background 0.4s; }
   .service-card:last-child { border-right: none; }
-  .service-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
-  }
+  .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; }
   .service-card:hover { background: rgba(201,168,76,0.04); }
   .service-card:hover::before { transform: scaleX(1); }
-  .service-icon { font-size: 1.8rem; margin-bottom: 2rem; display: block; color: var(--gold); line-height: 1; }
-  .service-num { position: absolute; top: 2rem; right: 2.5rem; font-family: 'Bebas Neue', sans-serif; font-size: 5rem; color: rgba(255,255,255,0.03); line-height: 1; }
-  .service-tag { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
-  .service-name { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; line-height: 0.9; margin-bottom: 1.5rem; }
-  .service-desc { font-size: 0.85rem; line-height: 1.7; color: rgba(245,240,232,0.5); margin-bottom: 2.5rem; }
-  .service-features { list-style: none; margin-bottom: 3rem; }
-  .service-features li {
-    font-size: 0.75rem; letter-spacing: 0.05em; color: rgba(245,240,232,0.4);
-    padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
-    display: flex; align-items: center; gap: 0.75rem;
-  }
+  .service-icon { font-size: 1.5rem; margin-bottom: 1.5rem; display: block; color: var(--gold); line-height: 1; }
+  .service-num { position: absolute; top: 1.5rem; right: 2rem; font-family: 'Bebas Neue', sans-serif; font-size: 4rem; color: rgba(255,255,255,0.03); line-height: 1; }
+  .service-tag { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+  .service-name { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; line-height: 0.9; margin-bottom: 1.2rem; }
+  .service-desc { font-size: 0.8rem; line-height: 1.7; color: rgba(245,240,232,0.5); margin-bottom: 2rem; }
+  .service-features { list-style: none; margin-bottom: 2rem; }
+  .service-features li { font-size: 0.72rem; letter-spacing: 0.05em; color: rgba(245,240,232,0.4); padding: 0.4rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 0.75rem; }
   .service-features li::before { content: '✦'; color: var(--gold); font-size: 0.5rem; flex-shrink: 0; }
   .service-link { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: gap 0.2s; }
   .service-link:hover { gap: 1rem; }
 
-  .process { padding: 8rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.06); background: var(--gray); }
+  /* ── Partner Section ── */
+  .partner {
+    padding: 7rem 4rem;
+    background: var(--gray);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+  .partner-left {}
+  .partner-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+  .partner-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
+  .partner-heading { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 5rem); line-height: 0.9; margin-bottom: 1.5rem; }
+  .partner-heading em { font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold); }
+  .partner-body { font-size: 0.9rem; line-height: 1.8; color: rgba(245,240,232,0.55); max-width: 420px; }
+  .partner-right { display: flex; flex-direction: column; align-items: flex-start; gap: 2.5rem; }
+  .partner-logo-wrap {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 2.5rem 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .partner-logo-wrap img { max-width: 260px; width: 100%; filter: brightness(0) invert(1); opacity: 0.85; }
+  .partner-tag { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--mid); border-left: 2px solid var(--gold); padding-left: 1rem; line-height: 1.6; }
+
+  .process { padding: 8rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.06); background: var(--black); }
   .process-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 8rem; align-items: start; }
   .process-steps { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
   .step { position: relative; padding-top: 4rem; }
@@ -307,16 +197,8 @@
   .step-desc { font-size: 0.8rem; line-height: 1.7; color: rgba(245,240,232,0.4); }
 
   #book { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; }
-  .book-left {
-    background: var(--gold); padding: 8rem 5rem;
-    display: flex; flex-direction: column; justify-content: center;
-    position: relative; overflow: hidden;
-  }
-  .book-left::before {
-    content: 'BOOK'; position: absolute; bottom: -2rem; left: -1rem;
-    font-family: 'Bebas Neue', sans-serif; font-size: 18rem;
-    color: rgba(0,0,0,0.08); line-height: 1; pointer-events: none;
-  }
+  .book-left { background: var(--gold); padding: 8rem 5rem; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; }
+  .book-left::before { content: 'BOOK'; position: absolute; bottom: -2rem; left: -1rem; font-family: 'Bebas Neue', sans-serif; font-size: 18rem; color: rgba(0,0,0,0.08); line-height: 1; pointer-events: none; }
   .book-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 6rem); color: var(--black); line-height: 0.9; margin-bottom: 1.5rem; }
   .book-sub { font-size: 1rem; color: rgba(10,10,10,0.6); line-height: 1.7; max-width: 320px; margin-bottom: 3rem; }
   .book-contact { display: flex; flex-direction: column; gap: 1rem; }
@@ -326,23 +208,13 @@
   .form-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.1em; margin-bottom: 2.5rem; }
   .form-group { margin-bottom: 1.5rem; }
   .form-group label { display: block; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.5rem; }
-  .form-group input, .form-group select, .form-group textarea {
-    width: 100%; background: transparent; border: none;
-    border-bottom: 1px solid rgba(255,255,255,0.12);
-    color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
-    padding: 0.75rem 0; outline: none; transition: border-color 0.2s; -webkit-appearance: none;
-  }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255,255,255,0.12); color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; padding: 0.75rem 0; outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
   .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-bottom-color: var(--gold); }
   .form-group select { cursor: pointer; background: var(--black); }
   .form-group select option { background: var(--gray); color: var(--white); }
   .form-group textarea { resize: none; height: 80px; }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-  .form-submit {
-    width: 100%; background: var(--gold); color: var(--black); border: none;
-    padding: 1.2rem; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500;
-    letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; margin-top: 1rem;
-    transition: background 0.2s, transform 0.2s;
-  }
+  .form-submit { width: 100%; background: var(--gold); color: var(--black); border: none; padding: 1.2rem; font-family: 'DM Sans', sans-serif; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; margin-top: 1rem; transition: background 0.2s, transform 0.2s; }
   .form-submit:hover { background: var(--gold-light); transform: translateY(-2px); }
   .success-msg { display: none; text-align: center; padding: 3rem; border: 1px solid var(--gold); }
   .success-msg.show { display: block; }
@@ -362,15 +234,16 @@
   @media (max-width: 900px) {
     body { cursor: auto; }
     .cursor, .cursor-ring { display: none; }
-
     nav { padding: 1.5rem 2rem; }
     .nav-links { display: none; }
     .hero { padding: 0 2rem 4rem; }
     .about { grid-template-columns: 1fr; }
     .about-right { border-top: 1px solid rgba(255,255,255,0.06); }
     .about-stat { padding: 2rem; }
-    .services-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .services-bottom { grid-template-columns: 1fr; }
     .service-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .partner { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 2rem; }
     .process-inner { grid-template-columns: 1fr; gap: 4rem; }
     .process-steps { grid-template-columns: 1fr; }
     #book { grid-template-columns: 1fr; }
@@ -381,8 +254,11 @@
     .services-header { flex-direction: column; gap: 2rem; align-items: flex-start; }
     #services { padding: 5rem 2rem; }
     .process { padding: 5rem 2rem; }
-
     .video-dot { --clip-duration: 11s; }
+  }
+
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -404,21 +280,15 @@
 <section class="hero">
   <div class="hero-video-container">
     <div class="hero-video-slide active" id="slide-0">
-      <video autoplay muted loop playsinline>
-        <source src="video-event.mp4" type="video/mp4">
-      </video>
+      <video autoplay muted loop playsinline><source src="video-event.mp4" type="video/mp4"></video>
       <div class="video-fallback">Loading...</div>
     </div>
     <div class="hero-video-slide" id="slide-1">
-      <video muted loop playsinline>
-        <source src="video-training.mp4" type="video/mp4">
-      </video>
+      <video muted loop playsinline><source src="video-training.mp4" type="video/mp4"></video>
       <div class="video-fallback">Training · Add video-training.mp4</div>
     </div>
     <div class="hero-video-slide" id="slide-2">
-      <video muted loop playsinline>
-        <source src="video-restaurant.mp4" type="video/mp4">
-      </video>
+      <video muted loop playsinline><source src="video-restaurant.mp4" type="video/mp4"></video>
       <div class="video-fallback">Restaurant · Add video-restaurant.mp4</div>
     </div>
   </div>
@@ -432,7 +302,7 @@
   </div>
   <span class="hero-video-label">Magic in Action</span>
   <div class="hero-number">M</div>
-  <span class="hero-tagline">Available for Bookings · Based in the USA</span>
+  <span class="hero-tagline">Host · Trainer · Coach · Healer · Curator · Creator</span>
   <h1 class="hero-title">
     <span class="gold-text">MAKE</span><br>
     <span class="outline">EVERY</span><br>
@@ -441,7 +311,9 @@
   <div class="hero-sub">
     <span class="hero-service-pill">Event Host</span>
     <span class="hero-service-pill">Personal Trainer</span>
-    <span class="hero-service-pill">Restaurant Consultant</span>
+    <span class="hero-service-pill">Meditation</span>
+    <span class="hero-service-pill">Life Coach</span>
+    <span class="hero-service-pill">Restaurant Curator</span>
   </div>
   <div class="hero-cta">
     <a href="#book" class="btn-primary">Book Magic</a>
@@ -453,25 +325,27 @@
   <div class="strip-inner">
     <span class="strip-item">Event Hosting</span><span class="strip-sep">✦</span>
     <span class="strip-item">Personal Training</span><span class="strip-sep">✦</span>
-    <span class="strip-item">Restaurant Consulting</span><span class="strip-sep">✦</span>
-    <span class="strip-item">Corporate Events</span><span class="strip-sep">✦</span>
-    <span class="strip-item">Custom Fitness Plans</span><span class="strip-sep">✦</span>
-    <span class="strip-item">Menu Development</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Meditation</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Massage</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Restaurant Curation</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Concept Creation</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Life Coaching</span><span class="strip-sep">✦</span>
     <span class="strip-item">Event Hosting</span><span class="strip-sep">✦</span>
     <span class="strip-item">Personal Training</span><span class="strip-sep">✦</span>
-    <span class="strip-item">Restaurant Consulting</span><span class="strip-sep">✦</span>
-    <span class="strip-item">Corporate Events</span><span class="strip-sep">✦</span>
-    <span class="strip-item">Custom Fitness Plans</span><span class="strip-sep">✦</span>
-    <span class="strip-item">Menu Development</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Meditation</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Massage</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Restaurant Curation</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Concept Creation</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Life Coaching</span><span class="strip-sep">✦</span>
   </div>
 </div>
 
 <section class="about" id="about">
   <div class="about-left reveal">
     <span class="section-label">The Man Behind the Name</span>
-    <h2 class="about-title">One Name.<br><em>Three Worlds.</em><br>Zero Limits.</h2>
+    <h2 class="about-title">One Name.<br><em>Seven Worlds.</em><br>Zero Limits.</h2>
     <p class="about-body">
-      Magic isn't just a name, it's a promise. Whether he's commanding a crowd at your event, pushing you past your limits in the gym, or transforming your restaurant into a must visit destination, Magic brings an unmatched energy and expertise to everything he does.<br><br>
+      Magic isn't just a name, it's a promise. Whether he's commanding a crowd at your event, pushing you past your limits in the gym, guiding you through stillness, or transforming a restaurant into a must visit destination — Magic brings an unmatched energy and expertise to everything he touches.<br><br>
       Seen at <strong style="color:var(--gold)">Mahari</strong> and beyond. Passion driven, results focused, unforgettable.
     </p>
     <div style="margin-top:3rem; position:relative; overflow:hidden;">
@@ -481,21 +355,23 @@
     </div>
   </div>
   <div class="about-right">
-    <div class="about-stat reveal"><span class="stat-num">8+</span><div class="stat-text"><strong>Years of Experience</strong>Across all three disciplines, delivering excellence every single time.</div></div>
+    <div class="about-stat reveal"><span class="stat-num">8+</span><div class="stat-text"><strong>Years of Experience</strong>Across all disciplines, delivering excellence every single time.</div></div>
     <div class="about-stat reveal"><span class="stat-num">500+</span><div class="stat-text"><strong>Events Hosted</strong>From intimate gatherings to large scale productions. Magic owns the room.</div></div>
-    <div class="about-stat reveal"><span class="stat-num">3</span><div class="stat-text"><strong>Disciplines Mastered</strong>Hosting, fitness, and food. Three completely different worlds, one professional.</div></div>
+    <div class="about-stat reveal"><span class="stat-num">7</span><div class="stat-text"><strong>Disciplines Mastered</strong>Hosting, fitness, mindfulness, healing, food, concepts, and life. One professional.</div></div>
   </div>
 </section>
 
 <section id="services">
   <div class="services-header reveal">
     <h2 class="services-title">What Magic<br><span class="outline">Brings to the</span><br>Table</h2>
-    <p class="services-intro">Three services. One standard: exceptional. Choose your experience and let's make it happen.</p>
+    <p class="services-intro">Seven disciplines. One standard: exceptional. Choose your experience and let's make it happen.</p>
   </div>
+
+  <!-- Top row: 4 cards -->
   <div class="services-grid">
     <div class="service-card reveal">
       <span class="service-num">01</span>
-      <span class="service-icon">&#9670;</span>
+      <span class="service-icon">◆</span>
       <span class="service-tag">Service 01</span>
       <h3 class="service-name">Event<br>Host</h3>
       <p class="service-desc">From the moment guests arrive to the final farewell, Magic controls the energy, the flow, and the vibe. Every event becomes a story worth telling.</p>
@@ -503,14 +379,13 @@
         <li>Corporate Events &amp; Galas</li>
         <li>Private Parties &amp; Celebrations</li>
         <li>Award Shows &amp; Ceremonies</li>
-        <li>Product Launches &amp; Brand Events</li>
         <li>Live Crowd Engagement</li>
       </ul>
       <a href="#book" class="service-link">Book for an Event →</a>
     </div>
     <div class="service-card reveal">
       <span class="service-num">02</span>
-      <span class="service-icon">&#9651;</span>
+      <span class="service-icon">△</span>
       <span class="service-tag">Service 02</span>
       <h3 class="service-name">Personal<br>Trainer</h3>
       <p class="service-desc">Magic doesn't just build bodies. He builds discipline, confidence, and lasting results. Tailored programs for all fitness levels and goals.</p>
@@ -519,18 +394,48 @@
         <li>Custom Workout Programs</li>
         <li>Nutrition Guidance</li>
         <li>Virtual &amp; In Person Sessions</li>
-        <li>Accountability Coaching</li>
       </ul>
       <a href="#book" class="service-link">Start Training →</a>
     </div>
     <div class="service-card reveal">
       <span class="service-num">03</span>
-      <span class="service-icon">&#9675;</span>
+      <span class="service-icon">○</span>
       <span class="service-tag">Service 03</span>
-      <h3 class="service-name">Restaurant<br>Consultant</h3>
+      <h3 class="service-name">Meditation<br>Guide</h3>
+      <p class="service-desc">Stillness is a skill. Magic leads guided meditation sessions that help you reset, refocus, and reconnect — whether solo or in a group setting.</p>
+      <ul class="service-features">
+        <li>1 on 1 &amp; Group Sessions</li>
+        <li>Breathwork &amp; Mindfulness</li>
+        <li>Stress &amp; Anxiety Relief</li>
+        <li>Virtual &amp; In Person</li>
+      </ul>
+      <a href="#book" class="service-link">Book a Session →</a>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-num">04</span>
+      <span class="service-icon">◇</span>
+      <span class="service-tag">Service 04</span>
+      <h3 class="service-name">Massage<br>Therapy</h3>
+      <p class="service-desc">Recovery is part of the process. Magic offers therapeutic massage focused on restoring the body, releasing tension, and elevating your overall wellness.</p>
+      <ul class="service-features">
+        <li>Deep Tissue &amp; Sports Massage</li>
+        <li>Relaxation &amp; Recovery</li>
+        <li>Mobile &amp; On-Site Availability</li>
+        <li>Pre &amp; Post Workout Care</li>
+      </ul>
+      <a href="#book" class="service-link">Book Massage →</a>
+    </div>
+  </div>
+
+  <!-- Bottom row: 3 cards -->
+  <div class="services-bottom">
+    <div class="service-card reveal">
+      <span class="service-num">05</span>
+      <span class="service-icon">▽</span>
+      <span class="service-tag">Service 05</span>
+      <h3 class="service-name">Restaurant<br>Curator</h3>
       <p class="service-desc">Behind Mahari and more. Magic brings the expertise to elevate your concept, streamline operations, and create dining experiences guests rave about.</p>
       <ul class="service-features">
-        <li>Concept Development</li>
         <li>Menu Design &amp; Strategy</li>
         <li>Staff Training &amp; Culture</li>
         <li>Operations Optimization</li>
@@ -538,6 +443,52 @@
       </ul>
       <a href="#book" class="service-link">Consult with Magic →</a>
     </div>
+    <div class="service-card reveal">
+      <span class="service-num">06</span>
+      <span class="service-icon">✦</span>
+      <span class="service-tag">Service 06</span>
+      <h3 class="service-name">Concept<br>Creator</h3>
+      <p class="service-desc">Magic doesn't just execute ideas — he builds them from the ground up. From brand identity to experiential concepts, he brings vision to life.</p>
+      <ul class="service-features">
+        <li>Brand Concept Development</li>
+        <li>Event &amp; Experience Design</li>
+        <li>Creative Direction</li>
+        <li>Hospitality Concepts</li>
+      </ul>
+      <a href="#book" class="service-link">Create with Magic →</a>
+    </div>
+    <div class="service-card reveal" style="border-right:none;">
+      <span class="service-num">07</span>
+      <span class="service-icon">◉</span>
+      <span class="service-tag">Service 07</span>
+      <h3 class="service-name">Life<br>Coach</h3>
+      <p class="service-desc">Sometimes you need someone who's been through it. Magic helps you break through mental blocks, build accountability, and map out the life you actually want.</p>
+      <ul class="service-features">
+        <li>Goal Setting &amp; Accountability</li>
+        <li>Mindset &amp; Confidence Work</li>
+        <li>1 on 1 Coaching Sessions</li>
+        <li>Long Term Development Plans</li>
+      </ul>
+      <a href="#book" class="service-link">Start Coaching →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── Brand Partner ── -->
+<section class="partner reveal">
+  <div class="partner-left">
+    <span class="partner-label">Brand Partnership</span>
+    <h2 class="partner-heading">Aligned With<br><em>The Grind.</em></h2>
+    <p class="partner-body">
+      Magic is a proud brand partner of HrdwrkLifestyle — a movement built around the belief that hard work isn't a sacrifice, it's a standard. The alignment is natural: the same discipline Magic brings to every session, every stage, and every table is what HrdwrkLifestyle is built on.<br><br>
+      Two brands. One ethos. No shortcuts.
+    </p>
+  </div>
+  <div class="partner-right">
+    <div class="partner-logo-wrap">
+      <img src="https://static.wixstatic.com/media/92dc0d_a518c6523a604a1e8ff5df5684fa44d7~mv2.png/v1/crop/x_319,y_443,w_1490,h_592/fill/w_370,h_150,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/92dc0d_a518c6523a604a1e8ff5df5684fa44d7~mv2.png" alt="HrdwrkLifestyle">
+    </div>
+    <p class="partner-tag">Official Brand Partner<br>HrdwrkLifestyle · hardworklifestyle.com</p>
   </div>
 </section>
 
@@ -564,7 +515,7 @@
     <div class="book-contact">
       <div class="contact-item"><span class="contact-icon">@</span>hello@bookmagic.com</div>
       <div class="contact-item"><span class="contact-icon">IG</span>Available on IG · @bookmagic</div>
-      <div class="contact-item"><span class="contact-icon">&#9675;</span>Based in USA · Available Nationwide</div>
+      <div class="contact-item"><span class="contact-icon">○</span>Based in USA · Available Nationwide</div>
     </div>
   </div>
   <div class="book-right">
@@ -576,7 +527,17 @@
       </div>
       <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com" required></div>
       <div class="form-row">
-        <div class="form-group"><label>Service</label><select required><option value="" disabled selected>Select a service</option><option>Event Hosting</option><option>Personal Training</option><option>Restaurant Consulting</option><option>Multiple Services</option></select></div>
+        <div class="form-group"><label>Service</label><select required>
+          <option value="" disabled selected>Select a service</option>
+          <option>Event Hosting</option>
+          <option>Personal Training</option>
+          <option>Meditation</option>
+          <option>Massage Therapy</option>
+          <option>Restaurant Curation</option>
+          <option>Concept Creation</option>
+          <option>Life Coaching</option>
+          <option>Multiple Services</option>
+        </select></div>
         <div class="form-group"><label>Preferred Date</label><input type="date"></div>
       </div>
       <div class="form-group"><label>Tell Magic More</label><textarea placeholder="Describe your event, goals, or project..."></textarea></div>
