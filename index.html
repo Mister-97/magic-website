@@ -132,6 +132,16 @@
       rgba(10,10,10,0.15) 65%,
       rgba(10,10,10,0.35) 100%);
   }
+  /* Stronger overlay for chapters where text blends with image */
+  .chapter-overlay--strong {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+      rgba(10,10,10,0.97) 0%,
+      rgba(10,10,10,0.70) 35%,
+      rgba(10,10,10,0.45) 60%,
+      rgba(10,10,10,0.55) 100%);
+  }
   .chapter-num-bg {
     position: absolute;
     top: 2rem;
@@ -337,7 +347,21 @@
     .chapter-panel--right .chapter-label::after { display: none; }
     .chapter-num-bg { font-size: 8rem; right: 1rem; }
     .chapter-panel--right .chapter-num-bg { left: auto; right: 1rem; }
-    .chapter-title { font-size: clamp(4rem, 18vw, 7rem); }
+    /* Reduce title size on mobile to prevent cutoff */
+    .chapter-title { font-size: clamp(3.2rem, 15vw, 6rem); }
+
+    /* Creator chapter: shift bg to right on mobile to show vest guy */
+    .chapter-bg--creator {
+      background-position: 70% center !important;
+    }
+
+    /* Press section: shift bg slightly left on mobile */
+    .chapter-bg--press {
+      background-position: 35% center !important;
+    }
+
+    /* Services title: remove gap between lines */
+    .services-title { line-height: 0.85; }
   }
 
   @media (max-width: 600px) {
@@ -441,7 +465,7 @@
 
   <div class="chapter-panel chapter-panel--right">
     <div class="chapter-bg" style="background-image:url('images/chapter-trainer.jpg'); background-position: center top;"></div>
-    <div class="chapter-overlay"></div>
+    <div class="chapter-overlay--strong"></div>
     <span class="chapter-num-bg">02</span>
     <div class="chapter-content reveal">
       <span class="chapter-label">Chapter 02</span>
@@ -464,8 +488,8 @@
   </div>
 
   <div class="chapter-panel chapter-panel--right">
-    <div class="chapter-bg" style="background-image:url('images/chapter-creator.jpg');"></div>
-    <div class="chapter-overlay"></div>
+    <div class="chapter-bg chapter-bg--creator" style="background-image:url('images/chapter-creator.jpg');"></div>
+    <div class="chapter-overlay--strong"></div>
     <span class="chapter-num-bg">04</span>
     <div class="chapter-content reveal">
       <span class="chapter-label">Chapter 04</span>
@@ -476,7 +500,7 @@
   </div>
 
   <div class="chapter-panel">
-    <div class="chapter-bg" style="background-image:url('images/chapter-story.jpg'); background-position: center 20%;"></div>
+    <div class="chapter-bg chapter-bg--press" style="background-image:url('images/chapter-story.jpg'); background-position: center 20%;"></div>
     <div class="chapter-overlay" style="background:linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.65) 40%, rgba(10,10,10,0.35) 100%);"></div>
     <span class="chapter-num-bg" style="font-size:clamp(8rem,18vw,18rem); color:rgba(201,168,76,0.04);">✦</span>
     <div class="chapter-content reveal">
