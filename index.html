@@ -77,7 +77,7 @@
   @keyframes dotProgress { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
   .hero-video-label { position: absolute; bottom: 6.5rem; right: 5.5rem; z-index: 10; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3); writing-mode: vertical-rl; text-orientation: mixed; transform: rotate(180deg); }
-  .hero-mute { position: absolute; bottom: 6rem; left: 4rem; z-index: 10; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: var(--white); font-size: 0.75rem; padding: 0.5rem 1rem; cursor: pointer; letter-spacing: 0.1em; backdrop-filter: blur(10px); transition: background 0.2s; font-family: 'DM Sans', sans-serif; }
+  .hero-mute { position: absolute; top: 6.2rem; right: 4rem; bottom: auto; left: auto; z-index: 10; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: var(--white); font-size: 0.75rem; padding: 0.5rem 1rem; cursor: pointer; letter-spacing: 0.1em; backdrop-filter: blur(10px); transition: background 0.2s; font-family: 'DM Sans', sans-serif; }
   .hero-mute:hover { background: rgba(255,255,255,0.15); }
 
   .hero-number { position: absolute; right: 4rem; top: 50%; transform: translateY(-50%); font-family: 'Bebas Neue', sans-serif; font-size: clamp(20rem, 35vw, 40rem); color: rgba(201,168,76,0.03); line-height: 1; pointer-events: none; user-select: none; letter-spacing: -0.05em; z-index: 3; }
@@ -102,6 +102,102 @@
   .strip-item { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); flex-shrink: 0; }
   .strip-sep { color: rgba(201,168,76,0.3); }
   @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* ─── CHAPTERS ─────────────────────────────────────────────── */
+  .chapters { position: relative; }
+  .chapter-panel {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .chapter-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 9s ease-out;
+    will-change: transform;
+  }
+  .chapter-panel:hover .chapter-bg { transform: scale(1.04); }
+  .chapter-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+      rgba(10,10,10,0.95) 0%,
+      rgba(10,10,10,0.45) 30%,
+      rgba(10,10,10,0.15) 65%,
+      rgba(10,10,10,0.35) 100%);
+  }
+  .chapter-num-bg {
+    position: absolute;
+    top: 2rem;
+    right: 5rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(10rem, 22vw, 22rem);
+    color: rgba(255,255,255,0.025);
+    line-height: 1;
+    pointer-events: none;
+    z-index: 2;
+    user-select: none;
+  }
+  .chapter-panel--right .chapter-num-bg { right: auto; left: 5rem; }
+  .chapter-content {
+    position: relative;
+    z-index: 3;
+    padding: 5rem 6rem;
+    max-width: 650px;
+  }
+  .chapter-panel--right .chapter-content { margin-left: auto; text-align: right; }
+  .chapter-label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+  }
+  .chapter-label::before { content: ''; width: 36px; height: 1px; background: var(--gold); flex-shrink: 0; }
+  .chapter-panel--right .chapter-label { justify-content: flex-end; }
+  .chapter-panel--right .chapter-label::before { display: none; }
+  .chapter-panel--right .chapter-label::after { content: ''; width: 36px; height: 1px; background: var(--gold); flex-shrink: 0; }
+  .chapter-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 12vw, 13rem);
+    line-height: 0.83;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .chapter-title em { font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold); }
+  .chapter-desc {
+    font-size: 0.88rem;
+    line-height: 1.75;
+    color: rgba(245,240,232,0.5);
+    max-width: 360px;
+    margin-bottom: 2.5rem;
+  }
+  .chapter-panel--right .chapter-desc { margin-left: auto; }
+  .chapter-link {
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    padding-bottom: 0.4rem;
+    transition: gap 0.2s, border-color 0.2s;
+  }
+  .chapter-link:hover { gap: 1.25rem; border-color: var(--gold); }
+  /* ──────────────────────────────────────────────────────────── */
 
   .about { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .about-left { padding: 8rem 4rem; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; justify-content: center; }
@@ -209,7 +305,7 @@
     .hero-tagline { display: none; }
     .hero-number { display: none; }
     .hero-video-label { display: none; }
-    .hero-mute { bottom: 2rem; left: 1.5rem; font-size: 0.65rem; padding: 0.35rem 0.75rem; opacity: 0.8; }
+    .hero-mute { position: absolute; top: auto; right: auto; bottom: 2rem; left: 1.5rem; font-size: 0.65rem; padding: 0.35rem 0.75rem; opacity: 0.8; }
     .hero-video-dots { bottom: 2rem; right: 1.5rem; }
     .hero-sub { gap: 0.75rem; margin-top: 1.5rem; }
     .hero-service-pill { font-size: 0.6rem; }
@@ -233,6 +329,15 @@
     #services { padding: 5rem 2rem; }
     .process { padding: 5rem 2rem; }
     .video-dot { --clip-duration: 11s; }
+    .chapter-panel { height: 85vh; min-height: 500px; }
+    .chapter-content { padding: 2.5rem 1.5rem; max-width: 100%; }
+    .chapter-panel--right .chapter-content { margin-left: 0; text-align: left; }
+    .chapter-panel--right .chapter-label { justify-content: flex-start; }
+    .chapter-panel--right .chapter-label::before { display: block; }
+    .chapter-panel--right .chapter-label::after { display: none; }
+    .chapter-num-bg { font-size: 8rem; right: 1rem; }
+    .chapter-panel--right .chapter-num-bg { left: auto; right: 1rem; }
+    .chapter-title { font-size: clamp(4rem, 18vw, 7rem); }
   }
 
   @media (max-width: 600px) {
@@ -319,6 +424,70 @@
     <span class="strip-item">Chicago IL</span><span class="strip-sep">✦</span>
   </div>
 </div>
+
+<section class="chapters" id="chapters">
+
+  <div class="chapter-panel">
+    <div class="chapter-bg" style="background-image:url('images/chapter-host.jpg');"></div>
+    <div class="chapter-overlay"></div>
+    <span class="chapter-num-bg">01</span>
+    <div class="chapter-content reveal">
+      <span class="chapter-label">Chapter 01</span>
+      <h2 class="chapter-title">The<br><em>Host.</em></h2>
+      <p class="chapter-desc">From the first guest to the final farewell — Magic commands every room, controls every vibe, and turns any gathering into a story worth telling.</p>
+      <a href="#book" class="chapter-link">Book an event →</a>
+    </div>
+  </div>
+
+  <div class="chapter-panel chapter-panel--right">
+    <div class="chapter-bg" style="background-image:url('images/chapter-trainer.jpg'); background-position: center top;"></div>
+    <div class="chapter-overlay"></div>
+    <span class="chapter-num-bg">02</span>
+    <div class="chapter-content reveal">
+      <span class="chapter-label">Chapter 02</span>
+      <h2 class="chapter-title">The<br><em>Trainer.</em></h2>
+      <p class="chapter-desc">Built different. Coaches different. Discipline, results, and standards that never compromise. Every body, every goal, every level.</p>
+      <a href="#book" class="chapter-link">Start training →</a>
+    </div>
+  </div>
+
+  <div class="chapter-panel">
+    <div class="chapter-bg" style="background-image:url('images/chapter-curator.jpg');"></div>
+    <div class="chapter-overlay"></div>
+    <span class="chapter-num-bg">03</span>
+    <div class="chapter-content reveal">
+      <span class="chapter-label">Chapter 03</span>
+      <h2 class="chapter-title">The<br><em>Curator.</em></h2>
+      <p class="chapter-desc">The vision behind Mahari — Hyde Park's award-winning destination. Magic elevates your dining concept from idea to iconic.</p>
+      <a href="#book" class="chapter-link">Consult with Magic →</a>
+    </div>
+  </div>
+
+  <div class="chapter-panel chapter-panel--right">
+    <div class="chapter-bg" style="background-image:url('images/chapter-creator.jpg');"></div>
+    <div class="chapter-overlay"></div>
+    <span class="chapter-num-bg">04</span>
+    <div class="chapter-content reveal">
+      <span class="chapter-label">Chapter 04</span>
+      <h2 class="chapter-title">The<br><em>Creator.</em></h2>
+      <p class="chapter-desc">He doesn't just execute ideas — he builds them from nothing. Brand identity, experiential concepts, hospitality vision. Magic brings it to life.</p>
+      <a href="#book" class="chapter-link">Create with Magic →</a>
+    </div>
+  </div>
+
+  <div class="chapter-panel">
+    <div class="chapter-bg" style="background-image:url('images/chapter-story.jpg'); background-position: center 20%;"></div>
+    <div class="chapter-overlay" style="background:linear-gradient(to top, rgba(10,10,10,0.97) 0%, rgba(10,10,10,0.65) 40%, rgba(10,10,10,0.35) 100%);"></div>
+    <span class="chapter-num-bg" style="font-size:clamp(8rem,18vw,18rem); color:rgba(201,168,76,0.04);">✦</span>
+    <div class="chapter-content reveal">
+      <span class="chapter-label">The Press</span>
+      <h2 class="chapter-title" style="font-size:clamp(4rem,10vw,11rem);">As Seen<br><em>In Print.</em></h2>
+      <p class="chapter-desc">Recognized by the Chicago Sun-Times and beyond. When Magic is in the room, the story writes itself.</p>
+      <a href="#about" class="chapter-link">Read the story →</a>
+    </div>
+  </div>
+
+</section>
 
 <section class="about" id="about">
   <div class="about-left reveal">
