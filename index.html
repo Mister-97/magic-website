@@ -103,22 +103,6 @@
   .strip-sep { color: rgba(201,168,76,0.3); }
   @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-  /* Award Banner */
-  .award-banner {
-    background: linear-gradient(90deg, #0a0a0a 0%, #1a1408 30%, #1a1408 70%, #0a0a0a 100%);
-    border-top: 1px solid rgba(201,168,76,0.2);
-    border-bottom: 1px solid rgba(201,168,76,0.2);
-    padding: 1.8rem 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-  }
-  .award-trophy { font-size: 1.4rem; }
-  .award-text { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); text-align: center; line-height: 1.6; }
-  .award-text strong { color: var(--white); display: block; font-size: 0.85rem; letter-spacing: 0.15em; margin-bottom: 0.2rem; }
-  .award-divider { width: 1px; height: 36px; background: rgba(201,168,76,0.25); }
-
   .about { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .about-left { padding: 8rem 4rem; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; justify-content: center; }
   .section-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
@@ -264,8 +248,6 @@
     #services { padding: 5rem 2rem; }
     .process { padding: 5rem 2rem; }
     .video-dot { --clip-duration: 11s; }
-    .award-banner { flex-direction: column; gap: 1rem; padding: 1.5rem 2rem; text-align: center; }
-    .award-divider { width: 40px; height: 1px; }
   }
 
   @media (max-width: 600px) {
@@ -353,27 +335,13 @@
   </div>
 </div>
 
-<!-- Jean Banchet Award Banner -->
-<div class="award-banner reveal">
-  <span class="award-trophy">🏆</span>
-  <div class="award-text">
-    <strong>Jean Banchet Award · Best Neighborhood Restaurant 2026</strong>
-    Mahari Restaurant · Hyde Park, Chicago · Voted by the City of Chicago
-  </div>
-  <div class="award-divider"></div>
-  <div class="award-text">
-    <strong>Mahari Family</strong>
-    Proud Recipients of Chicago's Premier Culinary Honor
-  </div>
-</div>
-
 <section class="about" id="about">
   <div class="about-left reveal">
     <span class="section-label">The Man Behind the Name</span>
     <h2 class="about-title">One Name.<br><em>Seven Worlds.</em><br>Zero Limits.</h2>
     <p class="about-body">
       Magic isn't just a name, it's a promise. Whether he's commanding a crowd at your event, pushing you past your limits in the gym, guiding you through stillness, or transforming a restaurant into a must visit destination — Magic brings an unmatched energy and expertise to everything he touches.<br><br>
-      Based in <strong style="color:var(--gold)">Chicago, IL</strong> and connected across the city. The Mahari Family, 2026 Jean Banchet Award recipients for <strong style="color:var(--gold)">Best Neighborhood Restaurant</strong> in Chicago. Passion driven, results focused, unforgettable.
+      Based in <strong style="color:var(--gold)">Chicago, IL</strong> and deeply rooted in the city. The Mahari Family are proud recipients of the <strong style="color:var(--gold)">2026 Jean Banchet Award for Best Neighborhood Restaurant</strong> and recognized by the Chicago Treasurer's Office with the <strong style="color:var(--gold)">Chicago Star Award</strong>. Passion driven, results focused, unforgettable.
     </p>
     <div style="margin-top:3rem; position:relative; overflow:hidden;">
       <img src="magic-mahari.png" alt="Magic at Mahari Restaurant" style="width:100%; max-width:480px; display:block; filter:brightness(0.9) contrast(1.05);">
@@ -382,15 +350,9 @@
     </div>
   </div>
   <div class="about-right">
-    <div class="about-stat reveal">
-      <span class="stat-num">🏆</span>
-      <div class="stat-text">
-        <strong>Jean Banchet Award 2026</strong>
-        Best Neighborhood Restaurant in Chicago. Hyde Park's finest, recognized by the city.
-      </div>
-    </div>
     <div class="about-stat reveal"><span class="stat-num">500+</span><div class="stat-text"><strong>Events Hosted</strong>From intimate gatherings to large scale productions across Chicago. Magic owns the room.</div></div>
     <div class="about-stat reveal"><span class="stat-num">7</span><div class="stat-text"><strong>Disciplines Mastered</strong>Hosting, fitness, mindfulness, healing, food, concepts, and life. One professional.</div></div>
+    <div class="about-stat reveal"><span class="stat-num" style="font-size:3rem;opacity:0.5;">CHI</span><div class="stat-text"><strong>Award Recognized</strong>Jean Banchet Award 2026 · Chicago Star Award · Mahari, Hyde Park.</div></div>
   </div>
 </section>
 
@@ -467,7 +429,7 @@
       <span class="service-icon">▽</span>
       <span class="service-tag">Service 05</span>
       <h3 class="service-name">Restaurant<br>Curator</h3>
-      <p class="service-desc">Behind Mahari — Chicago's 2026 Jean Banchet Award winner for Best Neighborhood Restaurant. Magic elevates your concept, streamlines operations, and creates experiences guests rave about.</p>
+      <p class="service-desc">The experience behind Mahari — 2026 Jean Banchet Award winner and Chicago Star Award recipient, Hyde Park's own. Magic elevates your concept, streamlines operations, and creates dining experiences guests rave about.</p>
       <ul class="service-features">
         <li>Menu Design &amp; Strategy</li>
         <li>Staff Training &amp; Culture</li>
