@@ -226,7 +226,7 @@
 
   #services { padding: 8rem 4rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5rem; }
-  .services-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 7vw, 7rem); line-height: 0.9; }
+  .services-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 7vw, 7rem); line-height: 0.85; }
   .services-title .outline { -webkit-text-stroke: 2px rgba(245,240,232,0.3); color: transparent; display: block; }
   .services-intro { max-width: 320px; font-size: 0.85rem; line-height: 1.7; color: rgba(245,240,232,0.5); }
 
@@ -347,8 +347,8 @@
     .chapter-panel--right .chapter-label::after { display: none; }
     .chapter-num-bg { font-size: 8rem; right: 1rem; }
     .chapter-panel--right .chapter-num-bg { left: auto; right: 1rem; }
-    /* Reduce title size on mobile to prevent cutoff */
-    .chapter-title { font-size: clamp(3.2rem, 15vw, 6rem); }
+    /* Reduce title size on mobile to prevent right-edge cutoff */
+    .chapter-title { font-size: clamp(2.8rem, 12vw, 5rem); }
 
     /* Creator chapter: shift bg to right on mobile to show vest guy */
     .chapter-bg--creator {
@@ -360,8 +360,8 @@
       background-position: 35% center !important;
     }
 
-    /* Services title: remove gap between lines */
-    .services-title { line-height: 0.85; }
+    /* Services title: tighten line-height on mobile */
+    .services-title { line-height: 0.82; }
   }
 
   @media (max-width: 600px) {
