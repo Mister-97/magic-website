@@ -103,6 +103,22 @@
   .strip-sep { color: rgba(201,168,76,0.3); }
   @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
+  /* Award Banner */
+  .award-banner {
+    background: linear-gradient(90deg, #0a0a0a 0%, #1a1408 30%, #1a1408 70%, #0a0a0a 100%);
+    border-top: 1px solid rgba(201,168,76,0.2);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 1.8rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+  .award-trophy { font-size: 1.4rem; }
+  .award-text { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); text-align: center; line-height: 1.6; }
+  .award-text strong { color: var(--white); display: block; font-size: 0.85rem; letter-spacing: 0.15em; margin-bottom: 0.2rem; }
+  .award-divider { width: 1px; height: 36px; background: rgba(201,168,76,0.25); }
+
   .about { display: grid; grid-template-columns: 1fr 1fr; min-height: 80vh; border-bottom: 1px solid rgba(255,255,255,0.06); }
   .about-left { padding: 8rem 4rem; border-right: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; justify-content: center; }
   .section-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; }
@@ -131,13 +147,6 @@
     gap: 0;
     border: 1px solid rgba(255,255,255,0.06);
   }
-  /* bottom row: 3 cards centered */
-  .services-grid .service-card:nth-child(5),
-  .services-grid .service-card:nth-child(6),
-  .services-grid .service-card:nth-child(7) {
-    border-top: 1px solid rgba(255,255,255,0.06);
-  }
-  /* span bottom row across 4 cols evenly */
   .services-bottom {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -170,7 +179,6 @@
     gap: 6rem;
     align-items: center;
   }
-  .partner-left {}
   .partner-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
   .partner-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
   .partner-heading { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 5rem); line-height: 0.9; margin-bottom: 1.5rem; }
@@ -202,7 +210,8 @@
   .book-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 6rem); color: var(--black); line-height: 0.9; margin-bottom: 1.5rem; }
   .book-sub { font-size: 1rem; color: rgba(10,10,10,0.6); line-height: 1.7; max-width: 320px; margin-bottom: 3rem; }
   .book-contact { display: flex; flex-direction: column; gap: 1rem; }
-  .contact-item { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: rgba(10,10,10,0.7); }
+  .contact-item { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; color: rgba(10,10,10,0.7); text-decoration: none; }
+  .contact-item:hover { color: rgba(10,10,10,1); }
   .contact-icon { width: 36px; height: 36px; background: rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; font-weight: 600; color: rgba(10,10,10,0.6); }
   .book-right { padding: 8rem 5rem; display: flex; flex-direction: column; justify-content: center; }
   .form-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.1em; margin-bottom: 2.5rem; }
@@ -255,6 +264,8 @@
     #services { padding: 5rem 2rem; }
     .process { padding: 5rem 2rem; }
     .video-dot { --clip-duration: 11s; }
+    .award-banner { flex-direction: column; gap: 1rem; padding: 1.5rem 2rem; text-align: center; }
+    .award-divider { width: 40px; height: 1px; }
   }
 
   @media (max-width: 600px) {
@@ -302,7 +313,7 @@
   </div>
   <span class="hero-video-label">Magic in Action</span>
   <div class="hero-number">M</div>
-  <span class="hero-tagline">Host · Trainer · Coach · Healer · Curator · Creator</span>
+  <span class="hero-tagline">Chicago · Host · Trainer · Coach · Healer · Curator · Creator</span>
   <h1 class="hero-title">
     <span class="gold-text">MAKE</span><br>
     <span class="outline">EVERY</span><br>
@@ -330,6 +341,7 @@
     <span class="strip-item">Restaurant Curation</span><span class="strip-sep">✦</span>
     <span class="strip-item">Concept Creation</span><span class="strip-sep">✦</span>
     <span class="strip-item">Life Coaching</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Chicago IL</span><span class="strip-sep">✦</span>
     <span class="strip-item">Event Hosting</span><span class="strip-sep">✦</span>
     <span class="strip-item">Personal Training</span><span class="strip-sep">✦</span>
     <span class="strip-item">Meditation</span><span class="strip-sep">✦</span>
@@ -337,6 +349,21 @@
     <span class="strip-item">Restaurant Curation</span><span class="strip-sep">✦</span>
     <span class="strip-item">Concept Creation</span><span class="strip-sep">✦</span>
     <span class="strip-item">Life Coaching</span><span class="strip-sep">✦</span>
+    <span class="strip-item">Chicago IL</span><span class="strip-sep">✦</span>
+  </div>
+</div>
+
+<!-- Jean Banchet Award Banner -->
+<div class="award-banner reveal">
+  <span class="award-trophy">🏆</span>
+  <div class="award-text">
+    <strong>Jean Banchet Award · Best Neighborhood Restaurant 2026</strong>
+    Mahari Restaurant · Hyde Park, Chicago · Voted by the City of Chicago
+  </div>
+  <div class="award-divider"></div>
+  <div class="award-text">
+    <strong>Mahari Family</strong>
+    Proud Recipients of Chicago's Premier Culinary Honor
   </div>
 </div>
 
@@ -346,17 +373,23 @@
     <h2 class="about-title">One Name.<br><em>Seven Worlds.</em><br>Zero Limits.</h2>
     <p class="about-body">
       Magic isn't just a name, it's a promise. Whether he's commanding a crowd at your event, pushing you past your limits in the gym, guiding you through stillness, or transforming a restaurant into a must visit destination — Magic brings an unmatched energy and expertise to everything he touches.<br><br>
-      Seen at <strong style="color:var(--gold)">Mahari</strong> and beyond. Passion driven, results focused, unforgettable.
+      Based in <strong style="color:var(--gold)">Chicago, IL</strong> and connected across the city. The Mahari Family, 2026 Jean Banchet Award recipients for <strong style="color:var(--gold)">Best Neighborhood Restaurant</strong> in Chicago. Passion driven, results focused, unforgettable.
     </p>
     <div style="margin-top:3rem; position:relative; overflow:hidden;">
       <img src="magic-mahari.png" alt="Magic at Mahari Restaurant" style="width:100%; max-width:480px; display:block; filter:brightness(0.9) contrast(1.05);">
       <div style="position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,rgba(10,10,10,0.8),transparent);"></div>
-      <span style="position:absolute;bottom:1.2rem;left:1.5rem;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);opacity:0.8;">✦ Mahari Restaurant</span>
+      <span style="position:absolute;bottom:1.2rem;left:1.5rem;font-size:0.6rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);opacity:0.8;">✦ Mahari · Hyde Park, Chicago</span>
     </div>
   </div>
   <div class="about-right">
-    <div class="about-stat reveal"><span class="stat-num">8+</span><div class="stat-text"><strong>Years of Experience</strong>Across all disciplines, delivering excellence every single time.</div></div>
-    <div class="about-stat reveal"><span class="stat-num">500+</span><div class="stat-text"><strong>Events Hosted</strong>From intimate gatherings to large scale productions. Magic owns the room.</div></div>
+    <div class="about-stat reveal">
+      <span class="stat-num">🏆</span>
+      <div class="stat-text">
+        <strong>Jean Banchet Award 2026</strong>
+        Best Neighborhood Restaurant in Chicago. Hyde Park's finest, recognized by the city.
+      </div>
+    </div>
+    <div class="about-stat reveal"><span class="stat-num">500+</span><div class="stat-text"><strong>Events Hosted</strong>From intimate gatherings to large scale productions across Chicago. Magic owns the room.</div></div>
     <div class="about-stat reveal"><span class="stat-num">7</span><div class="stat-text"><strong>Disciplines Mastered</strong>Hosting, fitness, mindfulness, healing, food, concepts, and life. One professional.</div></div>
   </div>
 </section>
@@ -434,7 +467,7 @@
       <span class="service-icon">▽</span>
       <span class="service-tag">Service 05</span>
       <h3 class="service-name">Restaurant<br>Curator</h3>
-      <p class="service-desc">Behind Mahari and more. Magic brings the expertise to elevate your concept, streamline operations, and create dining experiences guests rave about.</p>
+      <p class="service-desc">Behind Mahari — Chicago's 2026 Jean Banchet Award winner for Best Neighborhood Restaurant. Magic elevates your concept, streamlines operations, and creates experiences guests rave about.</p>
       <ul class="service-features">
         <li>Menu Design &amp; Strategy</li>
         <li>Staff Training &amp; Culture</li>
@@ -488,7 +521,7 @@
     <div class="partner-logo-wrap">
       <img src="https://static.wixstatic.com/media/92dc0d_a518c6523a604a1e8ff5df5684fa44d7~mv2.png/v1/crop/x_319,y_443,w_1490,h_592/fill/w_370,h_150,fp_0.50_0.50,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/92dc0d_a518c6523a604a1e8ff5df5684fa44d7~mv2.png" alt="HrdwrkLifestyle">
     </div>
-    <p class="partner-tag">Official Brand Partner<br>HrdwrkLifestyle · hardworklifestyle.com</p>
+    <p class="partner-tag">Official Brand Partner<br>HrdwrkLifestyle · @magichrdwrk</p>
   </div>
 </section>
 
@@ -513,9 +546,8 @@
     <h2 class="book-title">Ready to<br>Book Magic?</h2>
     <p class="book-sub">Fill out the form and Magic will personally get back to you within 24 hours. No automated responses, just real conversations.</p>
     <div class="book-contact">
-      <div class="contact-item"><span class="contact-icon">@</span>hello@bookmagic.com</div>
-      <div class="contact-item"><span class="contact-icon">IG</span>Available on IG · @bookmagic</div>
-      <div class="contact-item"><span class="contact-icon">○</span>Based in USA · Available Nationwide</div>
+      <a href="https://www.instagram.com/magichrdwrk/" target="_blank" class="contact-item"><span class="contact-icon">IG</span>@magichrdwrk on Instagram</a>
+      <div class="contact-item"><span class="contact-icon">📍</span>Chicago, IL · Available Nationwide</div>
     </div>
   </div>
   <div class="book-right">
@@ -552,9 +584,9 @@
 
 <footer>
   <span class="footer-logo">MAGIC</span>
-  <span class="footer-copy">&copy; 2025 Magic. All rights reserved.</span>
+  <span class="footer-copy">&copy; 2026 Magic · Chicago, IL</span>
   <div class="footer-socials">
-    <a href="#">Instagram</a>
+    <a href="https://www.instagram.com/magichrdwrk/" target="_blank">Instagram</a>
     <a href="#">LinkedIn</a>
     <a href="#">TikTok</a>
   </div>
