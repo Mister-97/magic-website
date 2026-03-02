@@ -219,7 +219,8 @@
     padding: 5rem 6rem;
     max-width: 650px;
   }
-  .chapter-panel--right .chapter-content { margin-left: auto; text-align: right; }
+  .chapter-panel--right .chapter-content { margin-left: auto; text-align: right; max-width: 720px; }
+  .chapter-panel--right .chapter-title { font-size: clamp(4rem, 9vw, 10rem); }
   .chapter-label {
     display: flex;
     align-items: center;
@@ -413,10 +414,19 @@
       background-position: 5% center !important;
     }
 
-    /* Press section: shift bg right on mobile to show face */
+    /* Press section: keep bg right so face shows on left, move text to right */
     .chapter-bg--press {
       background-position: 90% center !important;
     }
+    .chapter-panel:has(.chapter-bg--press) .chapter-content {
+      margin-left: auto;
+      text-align: right;
+    }
+    .chapter-panel:has(.chapter-bg--press) .chapter-label {
+      justify-content: flex-end;
+    }
+    .chapter-panel:has(.chapter-bg--press) .chapter-label::before { display: none; }
+    .chapter-panel:has(.chapter-bg--press) .chapter-label::after { content: ''; width: 36px; height: 1px; background: var(--gold); flex-shrink: 0; }
 
     /* Services title: tighten line-height on mobile */
     .services-title { line-height: 0.82; }
